@@ -1,7 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
-class PacMan:
+class PacMan(Sprite):
     """A class to represent a pacman sprite."""
     def __init__(self,ai_settings, screen):
         super(PacMan,self).__init__()
@@ -18,13 +18,13 @@ class PacMan:
         xMove = 0;
         yMove = 0;
 
-        if (key == K_RIGHT):
+        if (key == pygame.K_RIGHT):
             xMove = self.x_dist
-        elif (key == K_LEFT):
+        elif (key == pygame.K_LEFT):
             xMove = -self.x_dist
-        elif (key == K_UP):
+        elif (key == pygame.K_UP):
             yMove = -self.y_dist
-        elif (key == K_DOWN):
+        elif (key == pygame.K_DOWN):
             yMove = self.y_dist
         #self.rect = self.rect.move(xMove,yMove);
         self.rect.move_ip(xMove,yMove);

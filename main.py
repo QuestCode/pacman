@@ -14,12 +14,16 @@ def run_game():
     """Load Images"""
     ai_settings.load_images()
     pacman = PacMan(ai_settings,screen)
+    pacman_sprites = pygame.sprite.RenderPlain(pacman)
     play_bttn = Button(ai_settings,screen,'Play')
 
-    pellets = Group()
+    game_pellets = Group()
+
+    gf.load_sprites(ai_settings,screen,game_pellets)
 
     while 1:
         gf.check_events(ai_settings,screen,pacman,play_bttn)
+        gf.update_screen(ai_settings,screen,pacman_sprites,game_pellets)
 
     pygame.display.flip()
 
