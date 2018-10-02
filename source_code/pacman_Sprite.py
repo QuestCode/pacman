@@ -48,6 +48,6 @@ class PacMan(sprite.Sprite):
     def update(self,block_group):
         """Called when the Snake sprit should update itself"""
         self.rect.move_ip(self.xMove,self.yMove)
-        """IF we hit a block, don’t move – reverse the movement"""
+        """If we hit a block, don’t move – reverse the movement"""
         if pygame.sprite.spritecollide(self, block_group, False):
             self.rect.move_ip(-self.xMove,-self.yMove)

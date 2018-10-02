@@ -16,18 +16,21 @@ def run_game():
     """tell pygame to keep sending up keystrokes when they are held down"""
     pygame.key.set_repeat(500, 30)
     pacman = PacMan(ai_settings,screen)
-    pacman_sprites = pygame.sprite.RenderPlain(pacman)
     play_bttn = Button(ai_settings,screen,'Play')
 
+    pacman_sprites = Group()
     small_game_pellets = Group()
+    power_game_pellets = Group()
     blocks = Group()
 
-    gf.load_sprites(ai_settings,screen,small_game_pellets,blocks)
+    gf.load_sprites(ai_settings,small_game_pellets,power_game_pellets,blocks)
+    """Create the pacman group"""
+    # pacman_sprites = pygame.sprite.RenderUpdates(pacman)
 
     while True:
         gf.check_events(ai_settings,screen,pacman,play_bttn)
-        gf.check_pacman_pellet_collision(ai_settings,pacman,small_game_pellets)
-        gf.update_screen(ai_settings,screen,pacman_sprites,small_game_pellets)
+        gf.check_pacman_pellet_collision(ai_settings,pacman,small_game_pellets,power_game_pellets)
+        gf.update_screen(ai_settings,screen,pacman_sprites,small_game_pellets,power_game_pellets,blocks)
 
     pygame.display.flip()
 

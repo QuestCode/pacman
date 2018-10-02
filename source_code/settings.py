@@ -34,6 +34,7 @@ class Settings():
         self.orange_ghost_image = self.__load_image('orange_ghost.png',-1)
         self.red_ghost_image = self.__load_image('red_ghost.png',-1)
         self.pellet_image = self.__load_image('pellet.png',-1)
+        self.power_pellet_image = self.__load_image('big_pellet.png',-1)
         self.red_block_image = self.__load_image('square_red.png',-1)
         self.blue_block_image = self.__load_image('square_blue.png',-1)
 
