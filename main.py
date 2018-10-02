@@ -20,8 +20,9 @@ def run_game():
     play_bttn = Button(ai_settings,screen,'Play')
 
     small_game_pellets = Group()
+    blocks = Group()
 
-    gf.load_sprites(ai_settings,screen,small_game_pellets)
+    gf.load_sprites(ai_settings,screen,small_game_pellets,blocks)
 
     while True:
         gf.check_events(ai_settings,screen,pacman,play_bttn)

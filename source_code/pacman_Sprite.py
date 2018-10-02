@@ -1,10 +1,11 @@
-import sprite
+from . import sprite
 import pygame
 
-class Snake(sprite.Sprite):
+class PacMan(sprite.Sprite):
     def __init__(self, centerPoint, image):
         """initialize base class"""
-        basicSprite.Sprite.__init__(self, centerPoint, image)
+        # super(PacMan,centerPoint,image)
+        sprite.Sprite.__init__(self, centerPoint, image)
         """Initialize the number of pellets eaten"""
         self.pellets = 0
         """Set the number of Pixels to move each time"""

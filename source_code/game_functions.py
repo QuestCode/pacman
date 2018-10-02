@@ -2,7 +2,7 @@ import sys
 import pygame
 from pygame.sprite import Group
 
-from . import settings,pellets
+from . import settings,pellets,sprite,pacman_Sprite
 from .levels.level001 import FirstLevel
 
 def prep_game():
@@ -44,15 +44,37 @@ def check_play_button(ai_settings,screen,play_button,mouse_x,mouse_y):
     if button_clicked:
         print('pal')
 
-def load_sprites(ai_settings,screen,small_game_pellets):
+def load_sprites(ai_settings,screen,small_game_pellets,blocks):
     """figure out how many pellets we can display"""
-    size = 64
-    nNumHorizontal = int(ai_settings.screen_width/size)
-    nNumVertical = int(ai_settings.screen_height/size)
-    """Create all of the pellets and add them to the pellet_sprites group"""
-    for x in range(nNumHorizontal):
-        for y in range(nNumVertical):
-            small_game_pellets.add(pellets.Pellet(ai_settings,pygame.Rect(x*size, y*size, size, size)))
+    x_offset = (ai_settings.block_size/2)
+    y_offset = (ai_settings.block_size/2)
+
+    """Load Level"""
+    level1 = FirstLevel(ai_settings)
+    layout = level1.getLayout()
+    img_list = level1.getSprites()
+
+    for y in range(len(layout)):
+        for x in range(len(layout[y])):
+            """Get the center point for the rects"""
+            centerPoint = [(x*ai_settings.block_size)+x_offset,(y*ai_settings.block_size+y_offset)]
+            if layout[y][x]==level1.BLOCK:
+                block = sprite.Sprite(centerPoint, img_list[level1.BLOCK])
+                blocks.add(block)
+            elif layout[y][x]==level1.PACMAN:
+                pacman = pacman_Sprite.PacMan(centerPoint,img_list[level1.PACMAN])
+            elif layout[y][x]==level1.PELLET:
+                pellet = sprite.Sprite(centerPoint, img_list[level1.PELLET])
+                small_game_pellets.add(pellet)
+                """Create the Snake group"""
+    # self.snake_sprites = pygame.sprite.RenderPlain((self.snake))
+    # size = 64
+    # nNumHorizontal = int(ai_settings.screen_width/size)
+    # nNumVertical = int(ai_settings.screen_height/size)
+    # """Create all of the pellets and add them to the pellet_sprites group"""
+    # for x in range(nNumHorizontal):
+    #     for y in range(nNumVertical):
+    #         small_game_pellets.add(pellets.Pellet(ai_settings,pygame.Rect(x*size, y*size, size, size)))
 
 def check_pacman_pellet_collision(ai_settings,pacman,small_game_pellets):
     """Check for collision"""
