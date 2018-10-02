@@ -5,7 +5,7 @@ class PacMan:
     """A class to represent a pacman sprite."""
     def __init__(self,ai_settings, screen):
         super(PacMan,self).__init__()
-        self.image, self.rect = load_image('snake.png',-1)
+        self.image, self.rect = ai_settings.pacman_image
         self.pellets = 0
         """Set the number of Pixels to move each time"""
         self.x_dist = 5
