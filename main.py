@@ -13,6 +13,8 @@ def run_game():
 
     """Load Images"""
     ai_settings.load_images()
+    """tell pygame to keep sending up keystrokes when they are held down"""
+    pygame.key.set_repeat(500, 30)
     pacman = PacMan(ai_settings,screen)
     pacman_sprites = pygame.sprite.RenderPlain(pacman)
     play_bttn = Button(ai_settings,screen,'Play')
