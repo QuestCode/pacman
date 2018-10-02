@@ -19,14 +19,14 @@ def run_game():
     pacman_sprites = pygame.sprite.RenderPlain(pacman)
     play_bttn = Button(ai_settings,screen,'Play')
 
-    game_pellets = Group()
+    small_game_pellets = Group()
 
-    gf.load_sprites(ai_settings,screen,game_pellets)
+    gf.load_sprites(ai_settings,screen,small_game_pellets)
 
     while True:
         gf.check_events(ai_settings,screen,pacman,play_bttn)
-        gf.check_pacman_pellet_collision(pacman,game_pellets)
-        gf.update_screen(ai_settings,screen,pacman_sprites,game_pellets)
+        gf.check_pacman_pellet_collision(ai_settings,pacman,small_game_pellets)
+        gf.update_screen(ai_settings,screen,pacman_sprites,small_game_pellets)
 
     pygame.display.flip()
 

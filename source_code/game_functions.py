@@ -31,10 +31,10 @@ def check_events(ai_settings,screen,pacman,play_bttn):
             mouse_x,mouse_y = pygame.mouse.get_pos()
             check_play_button(ai_settings,screen,play_bttn,mouse_x,mouse_y)
 
-def update_screen(ai_settings,screen,pacman,game_pellets):
+def update_screen(ai_settings,screen,pacman,small_game_pellets):
     screen.fill(ai_settings.bg_color)
     pacman.draw(screen)
-    game_pellets.draw(screen)
+    small_game_pellets.draw(screen)
     pygame.display.flip()
 
 def check_play_button(ai_settings,screen,play_button,mouse_x,mouse_y):
@@ -43,18 +43,21 @@ def check_play_button(ai_settings,screen,play_button,mouse_x,mouse_y):
     if button_clicked:
         print('pal')
 
-def load_sprites(ai_settings,screen,game_pellets):
+def load_sprites(ai_settings,screen,small_game_pellets):
     """figure out how many pellets we can display"""
-    size = 48
+    size = 64
     nNumHorizontal = int(ai_settings.screen_width/size)
     nNumVertical = int(ai_settings.screen_height/size)
     """Create all of the pellets and add them to the pellet_sprites group"""
     for x in range(nNumHorizontal):
         for y in range(nNumVertical):
-            game_pellets.add(pellets.Pellet(ai_settings,pygame.Rect(x*size, y*size, size, size)))
+            small_game_pellets.add(pellets.Pellet(ai_settings,pygame.Rect(x*size, y*size, size, size)))
 
-def check_pacman_pellet_collision(pacman,game_pellets):
+def check_pacman_pellet_collision(ai_settings,pacman,small_game_pellets):
     """Check for collision"""
-    lstCols = pygame.sprite.spritecollide(pacman,game_pellets,True)
-    """Update the amount of pellets eaten"""
-    pacman.pellets = pacman.pellets + int(10*len(lstCols))
+    lstCols = pygame.sprite.spritecollide(pacman,small_game_pellets,True)
+    if lstCols:
+        """Update the amount of pellets eaten"""
+        pacman.pellets = pacman.pellets + int(10*len(lstCols))
+        ai_settings.play_sound('waka_waka.wav')
+        print(pacman.pellets)

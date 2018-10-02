@@ -46,3 +46,13 @@ class Settings():
                 colorkey = image.get_at((0,0))
             image.set_colorkey(colorkey, RLEACCEL)
         return image, image.get_rect()
+
+
+    def play_sound(self,name):
+        fullname = os.path.join('assets', 'sounds')
+        fullname = os.path.join(fullname, name)
+        try:
+            pygame.mixer.music.load(fullname)
+            pygame.mixer.music.play()
+        except :
+            pass
