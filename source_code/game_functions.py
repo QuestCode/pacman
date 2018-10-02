@@ -3,6 +3,7 @@ import pygame
 from pygame.sprite import Group
 
 from . import settings,pellets
+from .levels.level001 import FirstLevel
 
 def prep_game():
     pygame.init()

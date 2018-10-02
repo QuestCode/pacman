@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class PacMan(Sprite):
     """A class to represent a pacman sprite."""
     def __init__(self,ai_settings, screen):

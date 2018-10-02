@@ -19,6 +19,9 @@ class Settings():
         self.pacman_limit = 3
 
 
+        self.block_size = 24
+
+
         try:
             self.winner_font = pygame.font.Font("fonts/Megadeth.ttf", 70)
         except:
@@ -31,6 +34,8 @@ class Settings():
         self.orange_ghost_image = self.__load_image('orange_ghost.png',-1)
         self.red_ghost_image = self.__load_image('red_ghost.png',-1)
         self.pellet_image = self.__load_image('pellet.png',-1)
+        self.red_block_image = self.__load_image('square_red.png',-1)
+        self.blue_block_image = self.__load_image('square_blue.png',-1)
 
     def __load_image(self,name, colorkey=None):
         fullname = os.path.join('assets', 'images')
