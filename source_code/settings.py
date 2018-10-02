@@ -18,11 +18,6 @@ class Settings():
         # Ship settings
         self.pacman_limit = 3
 
-        self.pacman_image = self.__load_image('pacman.png',-1)
-        self.blue_ghost_image = self.__load_image('blue_ghost.png',-1)
-        self.orange_ghost_image = self.__load_image('orange_ghost.png',-1)
-        self.red_ghost_image = self.__load_image('red_ghost.png',-1)
-        self.pellet_image = self.__load_image('pellet.png',-1)
 
         try:
             self.winner_font = pygame.font.Font("fonts/Megadeth.ttf", 70)
@@ -30,6 +25,12 @@ class Settings():
             self.winner_font = pygame.font.Font(None, 70)
 
 
+    def load_images(self):
+        self.pacman_image = self.__load_image('pacman.png',-1)
+        self.blue_ghost_image = self.__load_image('blue_ghost.png',-1)
+        self.orange_ghost_image = self.__load_image('orange_ghost.png',-1)
+        self.red_ghost_image = self.__load_image('red_ghost.png',-1)
+        self.pellet_image = self.__load_image('pellet.png',-1)
 
     def __load_image(self,name, colorkey=None):
         fullname = os.path.join('assets', 'images')

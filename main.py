@@ -1,12 +1,10 @@
-from source_code.settings import Settings
+import source_code.game_functions as gf
 # from source_code import settings
 import pygame
 from pygame.sprite import Group
 
 def run_game():
-    pygame.init()
-    ai_settings = Settings()
-    screen = pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_height))
-    pygame.display.set_caption(ai_settings.game_title)
+    gf.prep_game()
+    gf.start_loop()
 
 run_game()
