@@ -52,3 +52,9 @@ def load_sprites(ai_settings,screen,game_pellets):
     for x in range(nNumHorizontal):
         for y in range(nNumVertical):
             game_pellets.add(pellets.Pellet(ai_settings,pygame.Rect(x*size, y*size, size, size)))
+
+def check_pacman_pellet_collision(pacman,game_pellets):
+    """Check for collision"""
+    lstCols = pygame.sprite.spritecollide(pacman,game_pellets,True)
+    """Update the amount of pellets eaten"""
+    pacman.pellets = pacman.pellets + int(10*len(lstCols))

@@ -21,8 +21,9 @@ def run_game():
 
     gf.load_sprites(ai_settings,screen,game_pellets)
 
-    while 1:
+    while True:
         gf.check_events(ai_settings,screen,pacman,play_bttn)
+        gf.check_pacman_pellet_collision(pacman,game_pellets)
         gf.update_screen(ai_settings,screen,pacman_sprites,game_pellets)
 
     pygame.display.flip()
