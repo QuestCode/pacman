@@ -5,6 +5,7 @@ from pygame.sprite import Group
 from . import settings,pellets,sprite,pacman,button,ghost
 from .levels import level001
 from .levels import level002
+from .levels import level003
 
 class GameFunctions:
 
@@ -80,14 +81,14 @@ class GameFunctions:
 
     def check_play_button(self,mouse_x,mouse_y):
         """Start a new game when the player clicks Play."""
-        button_clicked = self.play_button.rect.collidepoint(mouse_x,mouse_y)
+        button_clicked = self.play_bttn.rect.collidepoint(mouse_x,mouse_y)
         if button_clicked:
             print('pal')
 
 
     def load_sprites(self):
         """Load Level"""
-        level1 = level002.level(self.ai_settings)
+        level1 = level003.level(self.ai_settings)
         self.create_level(level1)
 
 
