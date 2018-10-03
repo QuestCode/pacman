@@ -22,10 +22,10 @@ class FirstLevel(Level):
         [9, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 9],\
         [9, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 9],\
         [9, 1, 1, 1, 1, 0, 1, 0, 1, 1, 4, 1, 1, 0, 1, 0, 1, 1, 1, 1, 9],\
-        [9, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 9],\
-        [9, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 9],\
-        [9, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 9],\
+        [9, 1, 0, 0, 0, 0, 0, 0, 1, 9, 9, 9, 1, 0, 0, 0, 0, 0, 0, 1, 9],\
+        [9, 1, 1, 1, 1, 0, 1, 0, 1, 9, 9, 9, 1, 0, 1, 0, 1, 1, 1, 1, 9],\
         [9, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 9],\
+        [9, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 9],\
         [9, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9],\
         [9, 1, 3, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 3, 1, 9],\
         [9, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 1, 9],\
@@ -36,8 +36,8 @@ class FirstLevel(Level):
         [9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9]]
 
     def getSprites(self):
-        block, rect = self.ai_settings.red_block_image
+        block, rect = self.ai_settings.blue_block_image
         pellet, rect = self.ai_settings.pellet_image
-        snake, rect = self.ai_settings.pacman_image
+        pacman, rect = self.ai_settings.pacman_right_image
         power_pellet, rect = self.ai_settings.power_pellet_image
-        return [pellet,block,snake,power_pellet]
+        return [pellet,block,pacman,power_pellet]

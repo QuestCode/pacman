@@ -30,6 +30,9 @@ class Settings():
 
     def load_images(self):
         self.pacman_image = self.__load_image('pacman.png',-1)
+        self.pacman_up_image = self.__load_image('player_u1.png',-1)
+        self.pacman_up_open_image = self.__load_image('player_u0.png',-1)
+        self.pacman_right_image = self.__load_image('player_r1.png',-1)
         self.blue_ghost_image = self.__load_image('blue_ghost.png',-1)
         self.orange_ghost_image = self.__load_image('orange_ghost.png',-1)
         self.red_ghost_image = self.__load_image('red_ghost.png',-1)
@@ -56,7 +59,7 @@ class Settings():
 
     def play_sound(self,name):
         fullname = os.path.join('assets', 'sounds')
-        fullname = os.path.join(fullname, name)
+        fullname = os.path.join(fullname,'pacman_'+name)
         try:
             pygame.mixer.music.load(fullname)
             pygame.mixer.music.play()
