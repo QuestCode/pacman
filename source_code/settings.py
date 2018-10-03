@@ -9,7 +9,7 @@ class Settings():
         """Initialize the game's static settings."""
         # Screen Settings
         self.game_title = 'Pac Man'
-        self.screen_width = 800
+        self.screen_width = 500
         self.screen_height = 600
         self.bg_color = (0,0,0)
         self.button_color = (0,0,0)
@@ -21,11 +21,6 @@ class Settings():
 
         self.block_size = 24
 
-
-        try:
-            self.winner_font = pygame.font.Font("fonts/Megadeth.ttf", 70)
-        except:
-            self.winner_font = pygame.font.Font(None, 70)
 
 
     def load_images(self):

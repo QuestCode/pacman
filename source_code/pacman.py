@@ -10,11 +10,12 @@ class PacMan(sprite.Sprite):
         """Initialize the number of pellets eaten"""
         self.pellets = 0
         """Set the number of Pixels to move each time"""
-        self.x_dist = 3
-        self.y_dist = 3
+        self.x_dist = 4
+        self.y_dist = 4
         """Initialize how much we are moving"""
         self.xMove = 0
         self.yMove = 0
+        self.powerState = False
 
     def MoveKeyDown(self, key):
         """This function sets the xMove or yMove variables that will
@@ -61,23 +62,22 @@ class PacMan(sprite.Sprite):
 
         """Check to see if we hit a Monster!"""
         lstGhost = pygame.sprite.spritecollide(self, ghost_group, False)
-        if lstGhost:
+        if len(lstGhost) > 0:
             """Allright we have hit a Monster!"""
             self.ghostCollide(lstGhost)
         else:
-            """Alright we did move, so check collisions"""
-            """Check for a snake collision/pellet collision"""
+            """Check for a pacman collision/pellet collision"""
             lstCols = pygame.sprite.spritecollide(self, pellet_group, True)
             pwrLstCol = pygame.sprite.spritecollide(self, power_pellet_group, True)
-            if lstCols:
+            if len(lstCols) > 0:
                 """Update the amount of pellets eaten"""
                 self.pellets += 10*len(lstCols)
                 self.ai_settings.play_sound('chomp.wav')
-                print(self.pellets)
                 """if we didn't hit a pellet, maybe we hit a power pellet?"""
-            elif pwrLstCol:
+            elif len(pwrLstCol) > 0:
+                self.pellets += 50*len(pwrLstCol)
                 """We have collided with a power pellet! Time to become Super!"""
-                self.superState = True
+                self.powerState = True
                 self.ai_settings.play_sound('chump.wav')
                 # pygame.event.post(pygame.event.Event(SUPER_STATE_START,{}))
                 # """Start a timer to figure out when the super state ends"""
@@ -85,17 +85,17 @@ class PacMan(sprite.Sprite):
                 # pygame.time.set_timer(SUPER_STATE_OVER,3000)
 
     def ghostCollide(self, lstGhost):
-        """This Function is called when the snake collides with the a Monster
-        lstMonstes is a list of Monster sprites that it has hit."""
+        """This Function is called when the snake collides with the a Ghost
+        lstGhost is a list of Ghost sprites that it has hit."""
 
-        if (len(lstGhost)<=0):
+        if len(lstGhost)<=0:
             """If the list is empty, just get out of here"""
             return
 
         """Loop through the ghosts and see what should happen"""
         for ghost in lstGhost:
-            if (ghost.scared):
+            if ghost.scared:
                 ghost.Eaten()
             # else:
             #     """Looks like we're dead"""
-            #     pygame.event.post(pygame.event.Event(SNAKE_EATEN,{}))
+            #     pygame.event.post(pygame.event.Event(PACMAN_EATEN,{}))

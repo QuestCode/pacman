@@ -16,24 +16,25 @@ class GameFunctions:
         """Load Images"""
         self.ai_settings.load_images()
         """tell pygame to keep sending up keystrokes when they are held down"""
-        pygame.key.set_repeat(500, 30)
+        # pygame.key.set_repeat(500, 30)
 
         """Play game sound at beginning"""
         self.ai_settings.play_sound('beginning.wav')
 
         self.play_bttn = button.Button(ai_settings,screen,'Play')
 
-        self.ghost_sprites = Group()
-        self.small_game_pellets = Group()
-        self.power_game_pellets = Group()
-        self.block_sprites = Group()
+
+        self.load_sprites()
 
         """Create Background"""
         self.background = pygame.Surface(screen.get_size())
         self.background = self.background.convert()
-        self.background.fill((0,0,0))
+        self.background.fill(self.ai_settings.bg_color)
+        """Draw the blocks onto the background,"""
+        self.block_sprites.draw(self.screen)
+        self.block_sprites.draw(self.background)
 
-        self.load_sprites()
+        pygame.display.flip()
 
         while True:
             self.pacman_sprites.clear(self.screen,self.background)
@@ -59,25 +60,35 @@ class GameFunctions:
                     self.pacman.MoveKeyUp(event.key)
                 elif event.key == pygame.K_q:
                     sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_x,mouse_y = pygame.mouse.get_pos()
-                self.check_play_button(mouse_x,mouse_y)
+            # elif event.type == pygame.MOUSEBUTTONDOWN:
+            #     mouse_x,mouse_y = pygame.mouse.get_pos()
+            #     self.check_play_button(mouse_x,mouse_y)
 
-            self.pacman_sprites.update(self.block_sprites,self.small_game_pellets,self.power_game_pellets,self.ghost_sprites)
+            self.pacman_sprites.update(self.block_sprites
+                                        ,self.small_game_pellets
+                                        ,self.power_game_pellets
+                                        ,self.ghost_sprites)
             self.ghost_sprites.update(self.block_sprites)
 
     def update_screen(self):
-        self.screen.fill(self.ai_settings.bg_color)
         self.screen.blit(self.background, (0, 0))
-        self.block_sprites.draw(self.background)
 
+        textpos = 0
+        if pygame.font:
+            font = pygame.font.Font(None, 36)
+            text = font.render("Score %s" % self.pacman.pellets
+                                , 1, (255, 255, 255))
+            textpos = text.get_rect(centerx=self.background.get_width()/2)
+            self.screen.blit(text, textpos)
+
+        reclist = [textpos]
         # pacman_sprites.clear(screen,self.background)
         # pacman.draw(screen)
-        self.power_game_pellets.draw(self.screen)
-        self.small_game_pellets.draw(self.screen)
-        self.pacman_sprites.draw(self.screen)
-        self.ghost_sprites.draw(self.screen)
-        pygame.display.flip()
+        reclist += self.power_game_pellets.draw(self.screen)
+        reclist += self.small_game_pellets.draw(self.screen)
+        reclist += self.pacman_sprites.draw(self.screen)
+        reclist += self.ghost_sprites.draw(self.screen)
+        pygame.display.update(reclist)
 
     def check_play_button(self,mouse_x,mouse_y):
         """Start a new game when the player clicks Play."""
@@ -88,7 +99,12 @@ class GameFunctions:
 
     def load_sprites(self):
         """Load Level"""
-        level1 = level003.level(self.ai_settings)
+        self.ghost_sprites = pygame.sprite.RenderUpdates()
+        self.small_game_pellets = pygame.sprite.RenderUpdates()
+        self.power_game_pellets = pygame.sprite.RenderUpdates()
+        self.block_sprites = pygame.sprite.RenderUpdates()
+
+        level1 = level001.level(self.ai_settings)
         self.create_level(level1)
 
 
@@ -124,19 +140,10 @@ class GameFunctions:
                 elif layout[x][y]==level.BLUEGHOST:
                     ghost_sprite = ghost.Ghost(centerPoint, img_list[level.BLUEGHOST],img_list[level.SCAREDGHOST])
                     self.ghost_sprites.add(ghost_sprite)
-                    """We also need pellets where the monsters are"""
-                    pellet = sprite.Sprite(centerPoint, img_list[level.PELLET])
-                    self.small_game_pellets.add(pellet)
                 elif layout[x][y]==level.ORANGEGHOST:
                     ghost_sprite = ghost.Ghost(centerPoint, img_list[level.ORANGEGHOST],img_list[level.SCAREDGHOST])
                     self.ghost_sprites.add(ghost_sprite)
-                    """We also need pellets where the monsters are"""
-                    pellet = sprite.Sprite(centerPoint, img_list[level.PELLET])
-                    self.small_game_pellets.add(pellet)
                 elif layout[x][y]==level.PINKGHOST:
                     ghost_sprite = ghost.Ghost(centerPoint, img_list[level.PINKGHOST],img_list[level.SCAREDGHOST])
                     self.ghost_sprites.add(ghost_sprite)
-                    """We also need pellets where the monsters are"""
-                    pellet = sprite.Sprite(centerPoint, img_list[level.PELLET])
-                    self.small_game_pellets.add(pellet)
-        self.pacman_sprites = pygame.sprite.RenderPlain(self.pacman)
+        self.pacman_sprites = pygame.sprite.RenderUpdates(self.pacman)

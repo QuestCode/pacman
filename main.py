@@ -11,6 +11,5 @@ def run_game():
 
     gf = GameFunctions(ai_settings,screen)
 
-    pygame.display.flip()
 
 run_game()

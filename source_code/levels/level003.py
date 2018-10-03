@@ -28,10 +28,10 @@ class level(Level):
                 [9,   1,   0,   1,   0,   1,   0,   1,   0,   1,   1,   1,   1,   0,   1,   1,   0,   1,   0,   1,   9],\
                 [9,   1,   0,   1,   0,   1,   0,   1,   0,   1,   1,   0,   0,   0,   1,   1,   0,   1,   0,   1,   9],\
                 [9,   1,   0,   1,   0,   1,   0,   1,   0,   1,   1,   0,   1,   1,   1,   1,   0,   1,   0,   1,   9],\
-                [9,   1,   3,   1,   0,   0,   0,   0,   0,   1,   1,   0,   0,   0,   1,   0,   0,   1,   0,   1,   9],\
-                [9,   1,   1,   1,   1,   0,   1,   1,   1,   1,   1,   0,   1,   0,   1,   0,   1,   1,   0,   1,   9],\
-                [9,   1,   3,   0,   1,   0,   1,   6,   5,   4,   9,   0,   1,   0,   0,   0,   0,   0,   0,   1,   9],\
-                [9,   1,   1,   0,   0,   0,   1,   7,   9,   9,   1,   0,   1,   0,   1,   1,   1,   1,   1,   1,   9],\
+                [9,   1,   3,   1,   0,   0,   0,   0,   4,   1,   1,   0,   0,   0,   1,   0,   0,   1,   0,   1,   9],\
+                [9,   1,   1,   1,   1,   0,   1,   1,   5,   1,   1,   0,   1,   0,   1,   0,   1,   1,   0,   1,   9],\
+                [9,   1,   3,   0,   1,   0,   1,   7,   6,   9,   1,   0,   1,   0,   0,   0,   0,   0,   0,   1,   9],\
+                [9,   1,   1,   0,   0,   0,   1,   1,   1,   1,   1,   0,   1,   0,   1,   1,   1,   1,   1,   1,   9],\
                 [9,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,   1,   0,   0,   0,   0,   0,   0,   1,   9],\
                 [9,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,   1,   1,   1,   1,   1,   1,   0,   1,   9],\
                 [9,   1,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   9],\
@@ -43,7 +43,7 @@ class level(Level):
     def getSprites(self):
         block, rect = self.ai_settings.blue_block_image
         pellet, rect = self.ai_settings.pellet_image
-        pacman, rect = self.ai_settings.pacman_right_image
+        pacman, rect = self.ai_settings.pacman_image
         power_pellet, rect = self.ai_settings.power_pellet_image
         power_pellet, rect = self.ai_settings.power_pellet_image
         red_ghost, rect = self.ai_settings.red_ghost_image
