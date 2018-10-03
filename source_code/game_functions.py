@@ -16,6 +16,9 @@ class GameFunctions:
         """tell pygame to keep sending up keystrokes when they are held down"""
         pygame.key.set_repeat(500, 30)
 
+        """Play game sound at beginning"""
+        self.ai_settings.play_sound('beginning.wav')
+
         self.play_bttn = button.Button(ai_settings,screen,'Play')
 
         self.ghost_sprites = Group()
@@ -34,7 +37,6 @@ class GameFunctions:
             self.pacman_sprites.clear(self.screen,self.background)
             self.ghost_sprites.clear(self.screen,self.background)
             self.check_events()
-            self.check_pacman_pellet_collision()
             self.update_screen()
 
     def check_events(self):
@@ -103,7 +105,7 @@ class GameFunctions:
                     block = sprite.Sprite(centerPoint, img_list[level.BLOCK])
                     self.block_sprites.add(block)
                 elif layout[x][y]==level.PACMAN:
-                    self.pacman = pacman.PacMan(centerPoint,img_list[level.PACMAN])
+                    self.pacman = pacman.PacMan(self.ai_settings,centerPoint,img_list[level.PACMAN])
                     # print(x,y)
                 elif layout[x][y]==level.PELLET:
                     pellet = sprite.Sprite(centerPoint, img_list[level.PELLET])
@@ -124,19 +126,3 @@ class GameFunctions:
                     ghost_sprite = ghost.Ghost(centerPoint, img_list[level.PINKGHOST],img_list[level.SCAREDGHOST])
                     self.ghost_sprites.add(ghost_sprite)
         self.pacman_sprites = pygame.sprite.RenderPlain(self.pacman)
-
-
-    def check_pacman_pellet_collision(self):
-        """Check for collision"""
-        pellet_Cols = pygame.sprite.spritecollide(self.pacman,self.small_game_pellets,True)
-        power_pellet_Cols = pygame.sprite.spritecollide(self.pacman,self.power_game_pellets,True)
-        if pellet_Cols:
-            """Update the amount of pellets eaten"""
-            self.pacman.pellets = self.pacman.pellets + int(10*len(pellet_Cols))
-            self.ai_settings.play_sound('chump.wav')
-            print(self.pacman.pellets)
-        elif power_pellet_Cols:
-            """Update the amount of pellets eaten"""
-            self.pacman.pellets = self.pacman.pellets + int(50*len(power_pellet_Cols))
-            self.ai_settings.play_sound('chump.wav')
-            print(self.pacman.pellets)

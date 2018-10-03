@@ -2,10 +2,11 @@ from . import sprite
 import pygame
 
 class PacMan(sprite.Sprite):
-    def __init__(self, centerPoint, image):
+    def __init__(self,ai_settings,centerPoint, image):
         """initialize base class"""
         # super(PacMan,centerPoint,image)
         sprite.Sprite.__init__(self, centerPoint, image)
+        self.ai_settings = ai_settings
         """Initialize the number of pellets eaten"""
         self.pellets = 0
         """Set the number of Pixels to move each time"""
@@ -45,14 +46,7 @@ class PacMan(sprite.Sprite):
         elif (key == pygame.K_DOWN):
             self.yMove += -self.y_dist
 
-    # def update(self,block_group):
-    #     """Called when the Snake sprit should update itself"""
-    #     self.rect.move_ip(self.xMove,self.yMove)
-    #     """If we hit a block, don’t move – reverse the movement"""
-    #     if pygame.sprite.spritecollide(self, block_group, False):
-    #         self.rect.move_ip(-self.xMove,-self.yMove)
-
-    def update(self,block_group,pellet_group,super_pellet_group,ghost_group):
+    def update(self,block_group,pellet_group,power_pellet_group,ghost_group):
         """Called when the Snake sprit should update itself"""
 
         if (self.xMove==0)and(self.yMove==0):
@@ -66,23 +60,25 @@ class PacMan(sprite.Sprite):
             self.rect.move_ip(-self.xMove,-self.yMove)
 
         """Check to see if we hit a Monster!"""
-        lstGhost =pygame.sprite.spritecollide(self, ghost_group, False)
-        if (len(lstGhost)>0):
+        lstGhost = pygame.sprite.spritecollide(self, ghost_group, False)
+        if lstGhost:
             """Allright we have hit a Monster!"""
-            self.MonsterCollide(lstGhost)
+            self.ghostCollide(lstGhost)
         else:
             """Alright we did move, so check collisions"""
             """Check for a snake collision/pellet collision"""
-            lstCols = pygame.sprite.spritecollide(self
-                                                 , pellet_group
-                                                 , True)
-            if (len(lstCols)>0):
+            lstCols = pygame.sprite.spritecollide(self, pellet_group, True)
+            pwrLstCol = pygame.sprite.spritecollide(self, power_pellet_group, True)
+            if lstCols:
                 """Update the amount of pellets eaten"""
-                self.pellets += len(lstCols)
-                """if we didn't hit a pellet, maybe we hit a SUper Pellet?"""
-            elif (len(pygame.sprite.spritecollide(self, super_pellet_group, True))>0):
-                """We have collided with a super pellet! Time to become Super!"""
+                self.pellets += 10*len(lstCols)
+                self.ai_settings.play_sound('chomp.wav')
+                print(self.pellets)
+                """if we didn't hit a pellet, maybe we hit a power pellet?"""
+            elif pwrLstCol:
+                """We have collided with a power pellet! Time to become Super!"""
                 self.superState = True
+                self.ai_settings.play_sound('chump.wav')
                 # pygame.event.post(pygame.event.Event(SUPER_STATE_START,{}))
                 # """Start a timer to figure out when the super state ends"""
                 # pygame.time.set_timer(SUPER_STATE_OVER,0)
