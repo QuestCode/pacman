@@ -33,9 +33,13 @@ class Settings():
         self.pacman_up_image = self.__load_image('player_u1.png',-1)
         self.pacman_up_open_image = self.__load_image('player_u0.png',-1)
         self.pacman_right_image = self.__load_image('player_r1.png',-1)
-        self.blue_ghost_image = self.__load_image('blue_ghost.png',-1)
-        self.orange_ghost_image = self.__load_image('orange_ghost.png',-1)
-        self.red_ghost_image = self.__load_image('red_ghost.png',-1)
+        # Ghost
+        self.blue_ghost_image = self.__load_image('inky.png',-1)
+        self.orange_ghost_image = self.__load_image('clyde.png',-1)
+        self.red_ghost_image = self.__load_image('blinky.png',-1)
+        self.pink_ghost_image = self.__load_image('pinky.png',-1)
+        self.scared_ghost_image = self.__load_image('frightened.png',-1)
+        # Objects
         self.pellet_image = self.__load_image('pellet.png',-1)
         self.power_pellet_image = self.__load_image('big_pellet.png',-1)
         self.red_block_image = self.__load_image('square_red.png',-1)

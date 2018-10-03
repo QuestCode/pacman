@@ -1,7 +1,5 @@
 from source_code.game_functions import GameFunctions
 from source_code.settings import Settings
-from source_code.pacman_Sprite import PacMan
-from source_code.button import Button
 import pygame
 from pygame.sprite import Group
 

@@ -1,31 +1,105 @@
+from . import sprite
 import pygame
-from pygame.sprite import Sprite
 
-
-class PacMan(Sprite):
-    """A class to represent a pacman sprite."""
-    def __init__(self,ai_settings, screen):
-        super(PacMan,self).__init__()
-        self.image, self.rect = ai_settings.pacman_image
+class PacMan(sprite.Sprite):
+    def __init__(self, centerPoint, image):
+        """initialize base class"""
+        # super(PacMan,centerPoint,image)
+        sprite.Sprite.__init__(self, centerPoint, image)
+        """Initialize the number of pellets eaten"""
         self.pellets = 0
         """Set the number of Pixels to move each time"""
-        self.x_dist = 5
-        self.y_dist = 5
+        self.x_dist = 3
+        self.y_dist = 3
+        """Initialize how much we are moving"""
+        self.xMove = 0
+        self.yMove = 0
 
-    def move(self, key):
-        """Move your self in one of the 4 directions according to key"""
-        """Key is the pyGame define for either up,down,left, or right key
-        we will adjust outselfs in that direction"""
-        xMove = 0;
-        yMove = 0;
+    def MoveKeyDown(self, key):
+        """This function sets the xMove or yMove variables that will
+        then move the snake when update() function is called. The
+        xMove and yMove values will be returned to normal when this
+        keys MoveKeyUp function is called."""
 
         if (key == pygame.K_RIGHT):
-            xMove = self.x_dist
+            self.xMove += self.x_dist
         elif (key == pygame.K_LEFT):
-            xMove = -self.x_dist
+            self.xMove += -self.x_dist
         elif (key == pygame.K_UP):
-            yMove = -self.y_dist
+            self.yMove += -self.y_dist
         elif (key == pygame.K_DOWN):
-            yMove = self.y_dist
-        #self.rect = self.rect.move(xMove,yMove);
-        self.rect.move_ip(xMove,yMove);
+            self.yMove += self.y_dist
+
+    def MoveKeyUp(self, key):
+        """This function resets the xMove or yMove variables that will
+        then move the snake when update() function is called. The
+        xMove and yMove values will be returned to normal when this
+        keys MoveKeyUp function is called."""
+
+        if (key == pygame.K_RIGHT):
+            self.xMove += -self.x_dist
+        elif (key == pygame.K_LEFT):
+            self.xMove += self.x_dist
+        elif (key == pygame.K_UP):
+            self.yMove += self.y_dist
+        elif (key == pygame.K_DOWN):
+            self.yMove += -self.y_dist
+
+    # def update(self,block_group):
+    #     """Called when the Snake sprit should update itself"""
+    #     self.rect.move_ip(self.xMove,self.yMove)
+    #     """If we hit a block, don’t move – reverse the movement"""
+    #     if pygame.sprite.spritecollide(self, block_group, False):
+    #         self.rect.move_ip(-self.xMove,-self.yMove)
+
+    def update(self,block_group,pellet_group,super_pellet_group,ghost_group):
+        """Called when the Snake sprit should update itself"""
+
+        if (self.xMove==0)and(self.yMove==0):
+            """If we arn'te moveing just get out of here"""
+            return
+        """All right we must be moving!"""
+        self.rect.move_ip(self.xMove,self.yMove)
+
+        if pygame.sprite.spritecollideany(self, block_group):
+            """IF we hit a block, don't move - reverse the movement"""
+            self.rect.move_ip(-self.xMove,-self.yMove)
+
+        """Check to see if we hit a Monster!"""
+        lstGhost =pygame.sprite.spritecollide(self, ghost_group, False)
+        if (len(lstGhost)>0):
+            """Allright we have hit a Monster!"""
+            self.MonsterCollide(lstGhost)
+        else:
+            """Alright we did move, so check collisions"""
+            """Check for a snake collision/pellet collision"""
+            lstCols = pygame.sprite.spritecollide(self
+                                                 , pellet_group
+                                                 , True)
+            if (len(lstCols)>0):
+                """Update the amount of pellets eaten"""
+                self.pellets += len(lstCols)
+                """if we didn't hit a pellet, maybe we hit a SUper Pellet?"""
+            elif (len(pygame.sprite.spritecollide(self, super_pellet_group, True))>0):
+                """We have collided with a super pellet! Time to become Super!"""
+                self.superState = True
+                # pygame.event.post(pygame.event.Event(SUPER_STATE_START,{}))
+                # """Start a timer to figure out when the super state ends"""
+                # pygame.time.set_timer(SUPER_STATE_OVER,0)
+                # pygame.time.set_timer(SUPER_STATE_OVER,3000)
+
+    def ghostCollide(self, lstGhost):
+        """This Function is called when the snake collides with the a Monster
+        lstMonstes is a list of Monster sprites that it has hit."""
+
+        if (len(lstGhost)<=0):
+            """If the list is empty, just get out of here"""
+            return
+
+        """Loop through the ghosts and see what should happen"""
+        for ghost in lstGhost:
+            if (ghost.scared):
+                ghost.Eaten()
+            # else:
+            #     """Looks like we're dead"""
+            #     pygame.event.post(pygame.event.Event(SNAKE_EATEN,{}))

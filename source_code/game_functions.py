@@ -2,7 +2,7 @@ import sys
 import pygame
 from pygame.sprite import Group
 
-from . import settings,pellets,sprite,pacman_Sprite,button
+from . import settings,pellets,sprite,pacman,button,ghost
 from .levels.level001 import FirstLevel
 
 class GameFunctions:
@@ -18,6 +18,7 @@ class GameFunctions:
 
         self.play_bttn = button.Button(ai_settings,screen,'Play')
 
+        self.ghost_sprites = Group()
         self.small_game_pellets = Group()
         self.power_game_pellets = Group()
         self.block_sprites = Group()
@@ -30,6 +31,8 @@ class GameFunctions:
         self.load_sprites()
 
         while True:
+            self.pacman_sprites.clear(self.screen,self.background)
+            self.ghost_sprites.clear(self.screen,self.background)
             self.check_events()
             self.check_pacman_pellet_collision()
             self.update_screen()
@@ -44,19 +47,20 @@ class GameFunctions:
                 or (event.key == pygame.K_UP)
                 or (event.key == pygame.K_DOWN)):
                     self.pacman.MoveKeyDown(event.key)
-                    self.pacman.update(self.block_sprites)
             elif event.type == pygame.KEYUP:
                 if ((event.key == pygame.K_RIGHT)
                 or (event.key == pygame.K_LEFT)
                 or (event.key == pygame.K_UP)
                 or (event.key == pygame.K_DOWN)):
                     self.pacman.MoveKeyUp(event.key)
-                    self.pacman.update(self.block_sprites)
                 elif event.key == pygame.K_q:
                     sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x,mouse_y = pygame.mouse.get_pos()
                 self.check_play_button(mouse_x,mouse_y)
+
+            self.pacman_sprites.update(self.block_sprites,self.small_game_pellets,self.power_game_pellets,self.ghost_sprites)
+            self.ghost_sprites.update(self.block_sprites)
 
     def update_screen(self):
         self.screen.fill(self.ai_settings.bg_color)
@@ -68,6 +72,7 @@ class GameFunctions:
         self.power_game_pellets.draw(self.screen)
         self.small_game_pellets.draw(self.screen)
         self.pacman_sprites.draw(self.screen)
+        self.ghost_sprites.draw(self.screen)
         pygame.display.flip()
 
     def check_play_button(self,mouse_x,mouse_y):
@@ -98,7 +103,7 @@ class GameFunctions:
                     block = sprite.Sprite(centerPoint, img_list[level.BLOCK])
                     self.block_sprites.add(block)
                 elif layout[x][y]==level.PACMAN:
-                    self.pacman = pacman_Sprite.PacMan(centerPoint,img_list[level.PACMAN])
+                    self.pacman = pacman.PacMan(centerPoint,img_list[level.PACMAN])
                     # print(x,y)
                 elif layout[x][y]==level.PELLET:
                     pellet = sprite.Sprite(centerPoint, img_list[level.PELLET])
@@ -106,6 +111,18 @@ class GameFunctions:
                 elif layout[x][y]==level.POWER_PELLET:
                     power_pellet = sprite.Sprite(centerPoint, img_list[level.POWER_PELLET])
                     self.power_game_pellets.add(power_pellet)
+                elif layout[x][y]==level.REDGHOST:
+                    ghost_sprite = ghost.Ghost(centerPoint, img_list[level.REDGHOST],img_list[level.SCAREDGHOST])
+                    self.ghost_sprites.add(ghost_sprite)
+                elif layout[x][y]==level.BLUEGHOST:
+                    ghost_sprite = ghost.Ghost(centerPoint, img_list[level.BLUEGHOST],img_list[level.SCAREDGHOST])
+                    self.ghost_sprites.add(ghost_sprite)
+                elif layout[x][y]==level.ORANGEGHOST:
+                    ghost_sprite = ghost.Ghost(centerPoint, img_list[level.ORANGEGHOST],img_list[level.SCAREDGHOST])
+                    self.ghost_sprites.add(ghost_sprite)
+                elif layout[x][y]==level.PINKGHOST:
+                    ghost_sprite = ghost.Ghost(centerPoint, img_list[level.PINKGHOST],img_list[level.SCAREDGHOST])
+                    self.ghost_sprites.add(ghost_sprite)
         self.pacman_sprites = pygame.sprite.RenderPlain(self.pacman)
 
 
