@@ -3,7 +3,8 @@ import pygame
 from pygame.sprite import Group
 
 from . import settings,pellets,sprite,pacman,button,ghost
-from .levels.level001 import FirstLevel
+from .levels import level001
+from .levels import level002
 
 class GameFunctions:
 
@@ -86,7 +87,7 @@ class GameFunctions:
 
     def load_sprites(self):
         """Load Level"""
-        level1 = FirstLevel(self.ai_settings)
+        level1 = level002.level(self.ai_settings)
         self.create_level(level1)
 
 
@@ -116,13 +117,25 @@ class GameFunctions:
                 elif layout[x][y]==level.REDGHOST:
                     ghost_sprite = ghost.Ghost(centerPoint, img_list[level.REDGHOST],img_list[level.SCAREDGHOST])
                     self.ghost_sprites.add(ghost_sprite)
+                    """We also need pellets where the monsters are"""
+                    pellet = sprite.Sprite(centerPoint, img_list[level.PELLET])
+                    self.small_game_pellets.add(pellet)
                 elif layout[x][y]==level.BLUEGHOST:
                     ghost_sprite = ghost.Ghost(centerPoint, img_list[level.BLUEGHOST],img_list[level.SCAREDGHOST])
                     self.ghost_sprites.add(ghost_sprite)
+                    """We also need pellets where the monsters are"""
+                    pellet = sprite.Sprite(centerPoint, img_list[level.PELLET])
+                    self.small_game_pellets.add(pellet)
                 elif layout[x][y]==level.ORANGEGHOST:
                     ghost_sprite = ghost.Ghost(centerPoint, img_list[level.ORANGEGHOST],img_list[level.SCAREDGHOST])
                     self.ghost_sprites.add(ghost_sprite)
+                    """We also need pellets where the monsters are"""
+                    pellet = sprite.Sprite(centerPoint, img_list[level.PELLET])
+                    self.small_game_pellets.add(pellet)
                 elif layout[x][y]==level.PINKGHOST:
                     ghost_sprite = ghost.Ghost(centerPoint, img_list[level.PINKGHOST],img_list[level.SCAREDGHOST])
                     self.ghost_sprites.add(ghost_sprite)
+                    """We also need pellets where the monsters are"""
+                    pellet = sprite.Sprite(centerPoint, img_list[level.PELLET])
+                    self.small_game_pellets.add(pellet)
         self.pacman_sprites = pygame.sprite.RenderPlain(self.pacman)
