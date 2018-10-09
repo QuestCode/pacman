@@ -3,6 +3,7 @@ import pygame
 from pygame.sprite import Group
 
 from . import settings,pellets,sprite,pacman,button,ghost
+# ,level
 from .levels import level001
 from .levels import level002
 from .levels import level003
@@ -104,6 +105,7 @@ class GameFunctions:
         self.power_game_pellets = pygame.sprite.RenderUpdates()
         self.block_sprites = pygame.sprite.RenderUpdates()
 
+        # level_ch = level.CurrentLevel(self.ai_settings,'level1.txt')
         level1 = level001.level(self.ai_settings)
         self.create_level(level1)
 

@@ -43,7 +43,7 @@ class level(Level):
     def getSprites(self):
         block, rect = self.ai_settings.blue_block_image
         pellet, rect = self.ai_settings.pellet_image
-        pacman, rect = self.ai_settings.pacman_image
+        pacman, rect = self.ai_settings.pacman_up_open_image
         power_pellet, rect = self.ai_settings.power_pellet_image
         power_pellet, rect = self.ai_settings.power_pellet_image
         red_ghost, rect = self.ai_settings.red_ghost_image

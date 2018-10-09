@@ -27,7 +27,7 @@ class Settings():
         self.pacman_image = self.__load_image('pacman.png',-1)
         self.pacman_up_image = self.__load_image('player_u1.png',-1)
         self.pacman_up_open_image = self.__load_image('player_u0.png',-1)
-        self.pacman_right_image = self.__load_image('player_r1.png',-1)
+        self.pacman_right_image = self.__load_image('player_r14.png',-1)
         # Ghost
         self.blue_ghost_image = self.__load_image('inky.png',-1)
         self.orange_ghost_image = self.__load_image('clyde.png',-1)
