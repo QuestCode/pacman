@@ -33,6 +33,8 @@ class GameFunctions:
         """Draw the blocks onto the background,"""
         self.block_sprites.draw(self.screen)
         self.block_sprites.draw(self.background)
+        self.portal_sprites.draw(self.screen)
+        self.portal_sprites.draw(self.background)
 
         pygame.display.flip()
 
@@ -65,6 +67,7 @@ class GameFunctions:
             #     self.check_play_button(mouse_x,mouse_y)
 
             self.pacman_sprites.update(self.block_sprites
+                                        ,self.portal_sprites
                                         ,self.small_game_pellets
                                         ,self.power_game_pellets
                                         ,self.ghost_sprites)
@@ -103,6 +106,7 @@ class GameFunctions:
         self.small_game_pellets = pygame.sprite.RenderUpdates()
         self.power_game_pellets = pygame.sprite.RenderUpdates()
         self.block_sprites = pygame.sprite.RenderUpdates()
+        self.portal_sprites = pygame.sprite.RenderUpdates()
 
         # level_ch = level.CurrentLevel(self.ai_settings,'level1.txt')
         level1 = level001.level(self.ai_settings)
@@ -123,6 +127,12 @@ class GameFunctions:
                 if layout[x][y]==level.BLOCK:
                     block = sprite.Sprite(centerPoint, img_list[level.BLOCK])
                     self.block_sprites.add(block)
+                elif layout[x][y]==level.VERTPORTAL:
+                    portal = sprite.Sprite(centerPoint, img_list[level.VERTPORTAL-1])
+                    self.portal_sprites.add(portal)
+                elif layout[x][y]==level.HORZPORTAL:
+                    portal = sprite.Sprite(centerPoint, img_list[level.HORZPORTAL-1])
+                    self.portal_sprites.add(portal)
                 elif layout[x][y]==level.PACMAN:
                     self.pacman = pacman.PacMan(self.ai_settings,centerPoint,img_list[level.PACMAN])
                     # print(x,y)

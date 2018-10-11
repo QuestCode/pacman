@@ -37,8 +37,9 @@ class Settings():
         # Objects
         self.pellet_image = self.__load_image('pellet.png',-1)
         self.power_pellet_image = self.__load_image('big_pellet.png',-1)
-        self.red_block_image = self.__load_image('square_red.png',-1)
-        self.blue_block_image = self.__load_image('square_blue.png',-1)
+        self.red_block_image = self.__load_image('square_red.png')
+        self.horz_portal_image = self.__load_image('horz_line_orange.png')
+        self.vert_portal_image = self.__load_image('vert_line_blue.png')
 
     def __load_image(self,name, colorkey=None):
         fullname = os.path.join('assets', 'images')

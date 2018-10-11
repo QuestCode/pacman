@@ -47,7 +47,7 @@ class PacMan(sprite.Sprite):
         elif (key == pygame.K_DOWN):
             self.yMove += -self.y_dist
 
-    def update(self,block_group,pellet_group,power_pellet_group,ghost_group):
+    def update(self,block_group,portal_group,pellet_group,power_pellet_group,ghost_group):
         """Called when the Snake sprit should update itself"""
 
         if (self.xMove==0)and(self.yMove==0):
