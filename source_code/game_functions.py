@@ -2,11 +2,10 @@ import sys
 import pygame
 from pygame.sprite import Group
 
-from . import settings,pellets,sprite,pacman,button,ghost
-# ,level
-from .levels import level001
-from .levels import level002
-from .levels import level003
+from source_code import settings,pellets,sprite,pacman,button,ghost
+from source_code.levels import level001
+from source_code.levels import level002
+from source_code.levels import level003
 
 class GameFunctions:
 
