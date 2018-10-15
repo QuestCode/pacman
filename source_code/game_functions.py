@@ -21,9 +21,6 @@ class GameFunctions:
         """Play game sound at beginning"""
         self.ai_settings.play_sound('beginning.wav')
 
-        self.play_bttn = button.Button(ai_settings,screen,'Play')
-
-
         self.load_sprites()
 
         """Create Background"""
@@ -33,8 +30,10 @@ class GameFunctions:
         """Draw the blocks onto the background,"""
         self.block_sprites.draw(self.screen)
         self.block_sprites.draw(self.background)
-        self.portal_sprites.draw(self.screen)
-        self.portal_sprites.draw(self.background)
+        self.horz_portal_sprites.draw(self.screen)
+        self.horz_portal_sprites.draw(self.background)
+        self.vert_portal_sprites.draw(self.screen)
+        self.vert_portal_sprites.draw(self.background)
 
         pygame.display.flip()
 
@@ -45,33 +44,32 @@ class GameFunctions:
             self.update_screen()
 
     def check_events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+        # for e in pygame.event.get():
+        e = pygame.event.wait()
+        if e.type == pygame.QUIT:
+            sys.exit()
+        elif e.type == pygame.KEYDOWN:
+            if ((e.key == pygame.K_RIGHT)
+            or (e.key == pygame.K_LEFT)
+            or (e.key == pygame.K_UP)
+            or (e.key == pygame.K_DOWN)):
+                self.pacman.MoveKeyDown(e.key)
+        elif e.type == pygame.KEYUP:
+            if ((e.key == pygame.K_RIGHT)
+            or (e.key == pygame.K_LEFT)
+            or (e.key == pygame.K_UP)
+            or (e.key == pygame.K_DOWN)):
+                self.pacman.MoveKeyUp(e.key)
+            elif e.key == pygame.K_q:
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if ((event.key == pygame.K_RIGHT)
-                or (event.key == pygame.K_LEFT)
-                or (event.key == pygame.K_UP)
-                or (event.key == pygame.K_DOWN)):
-                    self.pacman.MoveKeyDown(event.key)
-            elif event.type == pygame.KEYUP:
-                if ((event.key == pygame.K_RIGHT)
-                or (event.key == pygame.K_LEFT)
-                or (event.key == pygame.K_UP)
-                or (event.key == pygame.K_DOWN)):
-                    self.pacman.MoveKeyUp(event.key)
-                elif event.key == pygame.K_q:
-                    sys.exit()
-            # elif event.type == pygame.MOUSEBUTTONDOWN:
-            #     mouse_x,mouse_y = pygame.mouse.get_pos()
-            #     self.check_play_button(mouse_x,mouse_y)
 
-            self.pacman_sprites.update(self.block_sprites
-                                        ,self.portal_sprites
-                                        ,self.small_game_pellets
-                                        ,self.power_game_pellets
-                                        ,self.ghost_sprites)
-            self.ghost_sprites.update(self.block_sprites)
+        self.pacman_sprites.update(self.block_sprites
+                                    ,self.vert_portal_sprites
+                                    ,self.horz_portal_sprites
+                                    ,self.small_game_pellets
+                                    ,self.power_game_pellets
+                                    ,self.ghost_sprites)
+        self.ghost_sprites.update(self.block_sprites)
 
     def update_screen(self):
         self.screen.blit(self.background, (0, 0))
@@ -93,12 +91,6 @@ class GameFunctions:
         reclist += self.ghost_sprites.draw(self.screen)
         pygame.display.update(reclist)
 
-    def check_play_button(self,mouse_x,mouse_y):
-        """Start a new game when the player clicks Play."""
-        button_clicked = self.play_bttn.rect.collidepoint(mouse_x,mouse_y)
-        if button_clicked:
-            print('pal')
-
 
     def load_sprites(self):
         """Load Level"""
@@ -106,7 +98,8 @@ class GameFunctions:
         self.small_game_pellets = pygame.sprite.RenderUpdates()
         self.power_game_pellets = pygame.sprite.RenderUpdates()
         self.block_sprites = pygame.sprite.RenderUpdates()
-        self.portal_sprites = pygame.sprite.RenderUpdates()
+        self.horz_portal_sprites = pygame.sprite.RenderUpdates()
+        self.vert_portal_sprites = pygame.sprite.RenderUpdates()
 
         # level_ch = level.CurrentLevel(self.ai_settings,'level1.txt')
         level1 = level001.level(self.ai_settings)
@@ -129,10 +122,10 @@ class GameFunctions:
                     self.block_sprites.add(block)
                 elif layout[x][y]==level.VERTPORTAL:
                     portal = sprite.Sprite(centerPoint, img_list[level.VERTPORTAL-1])
-                    self.portal_sprites.add(portal)
+                    self.vert_portal_sprites.add(portal)
                 elif layout[x][y]==level.HORZPORTAL:
                     portal = sprite.Sprite(centerPoint, img_list[level.HORZPORTAL-1])
-                    self.portal_sprites.add(portal)
+                    self.horz_portal_sprites.add(portal)
                 elif layout[x][y]==level.PACMAN:
                     self.pacman = pacman.PacMan(self.ai_settings,centerPoint,img_list[level.PACMAN])
                     # print(x,y)

@@ -47,18 +47,28 @@ class PacMan(sprite.Sprite):
         elif (key == pygame.K_DOWN):
             self.yMove += -self.y_dist
 
-    def update(self,block_group,portal_group,pellet_group,power_pellet_group,ghost_group):
+    def update(self,block_group,vert_portal_group,horz_portal_group,pellet_group,power_pellet_group,ghost_group):
         """Called when the Snake sprit should update itself"""
 
         if (self.xMove==0)and(self.yMove==0):
-            """If we arn'te moveing just get out of here"""
+            """Check to see if they aren't moving"""
             return
-        """All right we must be moving!"""
+        """Move PacMan upwards!"""
         self.rect.move_ip(self.xMove,self.yMove)
 
         if pygame.sprite.spritecollideany(self, block_group):
             """IF we hit a block, don't move - reverse the movement"""
             self.rect.move_ip(-self.xMove,-self.yMove)
+
+        """Check to see if we hit a vertical portal"""
+        vertPrtCols = pygame.sprite.spritecollide(self,vert_portal_group,False)
+        if len(vertPrtCols) > 0:
+            print('Hit vertical portal')
+
+        """Check to see if we hit a horizontal portal"""
+        horzPrtCols = pygame.sprite.spritecollide(self,horz_portal_group,False)
+        if len(horzPrtCols) > 0:
+            print('Hit horizontal portal')
 
         """Check to see if we hit a Monster!"""
         lstGhost = pygame.sprite.spritecollide(self, ghost_group, False)
