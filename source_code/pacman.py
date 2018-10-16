@@ -62,13 +62,23 @@ class PacMan(sprite.Sprite):
 
         """Check to see if we hit a vertical portal"""
         vertPrtCols = pygame.sprite.spritecollide(self,vert_portal_group,False)
-        if len(vertPrtCols) > 0:
-            print('Hit vertical portal')
+        for currentPortal in vertPrtCols:
+            for vertPortal in vert_portal_group:
+                """Make sure the portal is the not the current portal that pacman is traveling through"""
+                if not vertPortal == currentPortal:
+                    if vertPortal.rect.x > 23:
+                        self.rect.center = vertPortal.rect.center
+                        self.rect.move_ip(self.xMove*4,0)
 
         """Check to see if we hit a horizontal portal"""
         horzPrtCols = pygame.sprite.spritecollide(self,horz_portal_group,False)
-        if len(horzPrtCols) > 0:
-            print('Hit horizontal portal')
+        for currentPortal in horzPrtCols:
+            for horzPortal in horz_portal_group:
+                """Make sure the portal is the not the current portal that pacman is traveling through"""
+                if not horzPortal == currentPortal:
+                    if horzPortal.rect.y > 23:
+                        self.rect.center = horzPortal.rect.center
+                        self.rect.move_ip(0,self.yMove*4)
 
         """Check to see if we hit a Monster!"""
         lstGhost = pygame.sprite.spritecollide(self, ghost_group, False)

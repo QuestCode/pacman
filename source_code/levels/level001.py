@@ -15,6 +15,7 @@ class level(Level):
         self.SCAREDGHOST = 8
         self.VERTPORTAL = 10
         self.HORZPORTAL = 11
+        self.GATE = 12
         self.ai_settings = ai_settings
 
     def getLayout(self):
@@ -27,8 +28,8 @@ class level(Level):
         [9, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1 ,1, 1, 0, 1, 0, 1, 1, 0, 1, 9],\
         [9, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1 ,0, 0, 0, 1, 0, 0, 0, 0, 1, 9],\
         [9, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 9],\
-        [9, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 9],\
-        [9, 1, 1, 1, 1, 0, 1, 0, 1, 1, 4, 1, 1, 0, 1, 0, 1, 1, 1, 1, 9],\
+        [9, 1, 1, 1, 1, 0, 1, 0, 0, 0, 4, 0, 0, 0, 1, 0, 1, 1, 1, 1, 9],\
+        [9, 1, 1, 1, 1, 0, 1, 0, 1, 1, 12, 1, 1, 0, 1, 0, 1, 1, 1, 1, 9],\
         [9, 1, 0, 0, 0, 0, 0, 0, 1, 5, 6, 7, 1, 0, 0, 0, 0, 0, 0, 1, 9],\
         [9, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 9],\
         [9, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 9],\
@@ -54,5 +55,6 @@ class level(Level):
         orange_ghost, rect = self.ai_settings.orange_ghost_image
         pink_ghost, rect = self.ai_settings.pink_ghost_image
         scared_ghost, rect = self.ai_settings.scared_ghost_image
+        gate, rect = self.ai_settings.gate_image
         return [pellet,block,pacman,power_pellet,red_ghost,blue_ghost,
-                orange_ghost,pink_ghost,scared_ghost,vert_portal,horz_portal]
+                orange_ghost,pink_ghost,scared_ghost,vert_portal,horz_portal,gate]

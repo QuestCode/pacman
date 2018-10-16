@@ -40,6 +40,7 @@ class Settings():
         self.red_block_image = self.__load_image('square_red.png')
         self.horz_portal_image = self.__load_image('horz_line_orange.png')
         self.vert_portal_image = self.__load_image('vert_line_blue.png')
+        self.gate_image = self.__load_image('gate.png')
 
     def __load_image(self,name, colorkey=None):
         fullname = os.path.join('assets', 'images')

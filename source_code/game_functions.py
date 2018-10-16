@@ -30,6 +30,8 @@ class GameFunctions:
         """Draw the blocks onto the background,"""
         self.block_sprites.draw(self.screen)
         self.block_sprites.draw(self.background)
+        self.gate_sprites.draw(self.screen)
+        self.gate_sprites.draw(self.background)
         self.horz_portal_sprites.draw(self.screen)
         self.horz_portal_sprites.draw(self.background)
         self.vert_portal_sprites.draw(self.screen)
@@ -69,7 +71,9 @@ class GameFunctions:
                                     ,self.small_game_pellets
                                     ,self.power_game_pellets
                                     ,self.ghost_sprites)
-        self.ghost_sprites.update(self.block_sprites)
+        self.ghost_sprites.update(self.block_sprites
+                                    ,self.vert_portal_sprites
+                                    ,self.horz_portal_sprites)
 
     def update_screen(self):
         self.screen.blit(self.background, (0, 0))
@@ -100,6 +104,7 @@ class GameFunctions:
         self.block_sprites = pygame.sprite.RenderUpdates()
         self.horz_portal_sprites = pygame.sprite.RenderUpdates()
         self.vert_portal_sprites = pygame.sprite.RenderUpdates()
+        self.gate_sprites = pygame.sprite.RenderUpdates()
 
         # level_ch = level.CurrentLevel(self.ai_settings,'level1.txt')
         level1 = level001.level(self.ai_settings)
@@ -126,6 +131,9 @@ class GameFunctions:
                 elif layout[x][y]==level.HORZPORTAL:
                     portal = sprite.Sprite(centerPoint, img_list[level.HORZPORTAL-1])
                     self.horz_portal_sprites.add(portal)
+                elif layout[x][y]==level.GATE:
+                    gate = sprite.Sprite(centerPoint, img_list[level.GATE-1])
+                    self.gate_sprites.add(gate)
                 elif layout[x][y]==level.PACMAN:
                     self.pacman = pacman.PacMan(self.ai_settings,centerPoint,img_list[level.PACMAN])
                     # print(x,y)
