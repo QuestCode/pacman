@@ -69,6 +69,7 @@ class PacMan(sprite.Sprite):
                     if vertPortal.rect.x > 23:
                         self.rect.center = vertPortal.rect.center
                         self.rect.move_ip(self.xMove*4,0)
+                        self.ai_settings.play_sound('transport.wav',-1)
 
         """Check to see if we hit a horizontal portal"""
         horzPrtCols = pygame.sprite.spritecollide(self,horz_portal_group,False)
@@ -79,6 +80,7 @@ class PacMan(sprite.Sprite):
                     if horzPortal.rect.y > 23:
                         self.rect.center = horzPortal.rect.center
                         self.rect.move_ip(0,self.yMove*4)
+                        self.ai_settings.play_sound('transport.wav',-1)
 
         """Check to see if we hit a Monster!"""
         lstGhost = pygame.sprite.spritecollide(self, ghost_group, False)
