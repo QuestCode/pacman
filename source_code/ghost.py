@@ -54,7 +54,7 @@ class Ghost(sprite.Sprite):
                 if not vertPortal == currentPortal:
                     if vertPortal.rect.x > 23:
                         self.rect.center = vertPortal.rect.center
-                        self.rect.move_ip(self.xMove*4,0)
+                        self.rect.move_ip(xMove*8,0)
 
         """Check to see if we hit a horizontal portal"""
         horzPrtCols = pygame.sprite.spritecollide(self,horz_portal_group,False)
@@ -64,7 +64,7 @@ class Ghost(sprite.Sprite):
                 if not horzPortal == currentPortal:
                     if horzPortal.rect.y > 23:
                         self.rect.center = horzPortal.rect.center
-                        self.rect.move_ip(0,self.yMove*4)
+                        self.rect.move_ip(0,yMove*8)
 
 
     def SetScared(self, scared):

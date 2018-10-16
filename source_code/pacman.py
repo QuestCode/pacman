@@ -17,13 +17,19 @@ class PacMan(sprite.Sprite):
         self.yMove = 0
         self.powerState = False
 
+        self.counter = 0
+
     def MoveKeyDown(self, key):
         """This function sets the xMove or yMove variables that will
-        then move the snake when update() function is called. The
+        then move pacman when update() function is called. The
         xMove and yMove values will be returned to normal when this
         keys MoveKeyUp function is called."""
-
         if (key == pygame.K_RIGHT):
+            # images = [self.ai_settings.pacman_rt_open_image,self.ai_settings.pacman_rt_close_image]
+            # self.image = images[self.counter]
+            # self.counter = (self.counter + 1) % len(images)
+            # if self.counter >= len(images):
+            #     self.counter = 0
             self.xMove += self.x_dist
         elif (key == pygame.K_LEFT):
             self.xMove += -self.x_dist
@@ -34,7 +40,7 @@ class PacMan(sprite.Sprite):
 
     def MoveKeyUp(self, key):
         """This function resets the xMove or yMove variables that will
-        then move the snake when update() function is called. The
+        then move pacman when update() function is called. The
         xMove and yMove values will be returned to normal when this
         keys MoveKeyUp function is called."""
 
@@ -69,7 +75,7 @@ class PacMan(sprite.Sprite):
                     if vertPortal.rect.x > 23:
                         self.rect.center = vertPortal.rect.center
                         self.rect.move_ip(self.xMove*4,0)
-                        self.ai_settings.play_sound('transport.wav',-1)
+                        self.ai_settings.play_sound('teleport.mp3')
 
         """Check to see if we hit a horizontal portal"""
         horzPrtCols = pygame.sprite.spritecollide(self,horz_portal_group,False)
@@ -80,7 +86,7 @@ class PacMan(sprite.Sprite):
                     if horzPortal.rect.y > 23:
                         self.rect.center = horzPortal.rect.center
                         self.rect.move_ip(0,self.yMove*4)
-                        self.ai_settings.play_sound('transport.wav',-1)
+                        self.ai_settings.play_sound('teleport.mp3')
 
         """Check to see if we hit a Monster!"""
         lstGhost = pygame.sprite.spritecollide(self, ghost_group, False)

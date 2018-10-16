@@ -67,12 +67,9 @@ class Settings():
         return image, image.get_rect()
 
 
-    def play_sound(self,name,pacman=None):
+    def play_sound(self,name):
         fullname = os.path.join('assets', 'sounds')
-        if pacman == None:
-            fullname = os.path.join(fullname,'pacman_'+name)
-        else:
-            fullname = os.path.join(fullname,'portal_'+name)
+        fullname = os.path.join(fullname,'pacman_'+name)
         try:
             pygame.mixer.music.load(fullname)
             pygame.mixer.music.play()
