@@ -28,6 +28,15 @@ class Settings():
         self.pacman_up_image = self.__load_image('player_u1.png',-1)
         self.pacman_up_open_image = self.__load_image('player_u0.png',-1)
         self.pacman_right_image = self.__load_image('player_r14.png',-1)
+
+        self.pacman_lf_close_image = self.__load_image('leftClose.png',-1)
+        self.pacman_lf_open_image = self.__load_image('leftOpen.png',-1)
+        self.pacman_rt_close_image = self.__load_image('rightClose.png',-1)
+        self.pacman_rt_open_image = self.__load_image('rightOpen.png',-1)
+        self.pacman_up_close_image = self.__load_image('upClose.png',-1)
+        self.pacman_up_open_image = self.__load_image('upOpen.png',-1)
+        self.pacman_down_close_image = self.__load_image('downClose.png',-1)
+        self.pacman_down_open_image = self.__load_image('downOpen.png',-1)
         # Ghost
         self.blue_ghost_image = self.__load_image('inky.png',-1)
         self.orange_ghost_image = self.__load_image('clyde.png',-1)

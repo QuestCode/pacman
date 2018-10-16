@@ -39,7 +39,10 @@ class GameFunctions:
 
         pygame.display.flip()
 
+        clock = pygame.time.Clock()
+
         while True:
+            clock.tick(60)
             self.pacman_sprites.clear(self.screen,self.background)
             self.ghost_sprites.clear(self.screen,self.background)
             self.check_events()

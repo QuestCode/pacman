@@ -93,11 +93,11 @@ class PacMan(sprite.Sprite):
             pwrLstCol = pygame.sprite.spritecollide(self, power_pellet_group, True)
             if len(lstCols) > 0:
                 """Update the amount of pellets eaten"""
-                self.pellets += 10*len(lstCols)
+                self.pellets += 100*len(lstCols)
                 self.ai_settings.play_sound('chomp.wav')
                 """if we didn't hit a pellet, maybe we hit a power pellet?"""
             elif len(pwrLstCol) > 0:
-                self.pellets += 50*len(pwrLstCol)
+                self.pellets += 500*len(pwrLstCol)
                 """We have collided with a power pellet! Time to become Super!"""
                 self.powerState = True
                 self.ai_settings.play_sound('chump.wav')
