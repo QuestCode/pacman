@@ -2,7 +2,7 @@ import sys
 import pygame
 from pygame.sprite import Group
 
-from source_code import settings,stats,pellets,sprite,pacman,button,ghost
+from source_code import settings,stats,scoreboard,pellets,sprite,pacman,button,ghost
 from source_code.levels import level001
 from source_code.levels import level002
 from source_code.levels import level003
@@ -13,6 +13,7 @@ class GameFunctions:
         self.ai_settings = ai_settings
         self.screen = screen
         self.game_stats = stats.Stats(self.ai_settings)
+        self.scoreboard = scoreboard.Scoreboard(ai_settings,screen,self.game_stats)
 
         """Load Images"""
         self.ai_settings.load_images()
@@ -38,16 +39,17 @@ class GameFunctions:
         self.vert_portal_sprites.draw(self.screen)
         self.vert_portal_sprites.draw(self.background)
 
-        pygame.display.flip()
 
         clock = pygame.time.Clock()
 
         while True:
-            clock.tick(60)
+            # clock.tick(60)
             self.pacman_sprites.clear(self.screen,self.background)
             self.ghost_sprites.clear(self.screen,self.background)
             self.check_events()
-            self.update_screen()
+            self.update_game()
+
+        pygame.display.flip()
 
     def check_events(self):
         # for e in pygame.event.get():
@@ -79,30 +81,44 @@ class GameFunctions:
                                     ,self.vert_portal_sprites
                                     ,self.horz_portal_sprites)
 
-    def update_screen(self):
+    def update_game(self):
         self.screen.blit(self.background, (0, 0))
         self.score = self.pacman.pellets
+        self.highScore = self.game_stats.highScore
         self.check_score()
         textpos = 0
         if pygame.font:
             font = pygame.font.Font(None, 36)
-            text = font.render("Score %s" % self.score
-                                , 1, (255, 255, 255))
-            textpos = text.get_rect(centerx=self.background.get_width()/2)
-            self.screen.blit(text, textpos)
 
-        reclist = [textpos]
+            high_score_text = font.render("High Score %s" % self.highScore
+                                , 1, (255, 255, 255))
+            high_score_textpos = high_score_text.get_rect(centerx=self.background.get_width()/4)
+            self.screen.blit(high_score_text, high_score_textpos)
+
+            score_text = font.render("Score %s" % self.score
+                                , 1, (255, 255, 255))
+            score_textpos = score_text.get_rect(centerx=((self.background.get_width()/2) + (self.background.get_width()/4)))
+            self.screen.blit(score_text, score_textpos)
+
+
+        reclist = [high_score_textpos,score_textpos]
         reclist += self.power_game_pellets.draw(self.screen)
         reclist += self.small_game_pellets.draw(self.screen)
         reclist += self.pacman_sprites.draw(self.screen)
         reclist += self.ghost_sprites.draw(self.screen)
         pygame.display.update(reclist)
 
+    def initialize_screen(self):
+        self.play_button = Button(ai_settings,screen,"Play")
+
+
     """Check if current score is better than high score"""
     def check_score(self):
         if self.score > self.game_stats.highScore:
             self.game_stats.highScore = self.score
             self.game_stats.updateScore()
+
+
 
     def load_sprites(self):
         """Load Level"""
