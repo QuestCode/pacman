@@ -13,12 +13,11 @@ class GameFunctions:
         self.ai_settings = ai_settings
         self.screen = screen
         self.game_stats = stats.Stats(self.ai_settings)
-        self.scoreboard = scoreboard.Scoreboard(ai_settings,screen,self.game_stats)
 
         """Load Images"""
         self.ai_settings.load_images()
         """tell pygame to keep sending up keystrokes when they are held down"""
-        # pygame.key.set_repeat(500, 30)
+        pygame.key.set_repeat(500, 30)
 
         """Play game sound at beginning"""
         self.ai_settings.play_sound('beginning.wav')
