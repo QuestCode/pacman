@@ -2,7 +2,7 @@ import sys
 import pygame
 from pygame.sprite import Group
 
-from source_code import settings,pellets,sprite,pacman,button,ghost
+from source_code import settings,stats,pellets,sprite,pacman,button,ghost
 from source_code.levels import level001
 from source_code.levels import level002
 from source_code.levels import level003
@@ -12,6 +12,7 @@ class GameFunctions:
     def __init__(self,ai_settings,screen):
         self.ai_settings = ai_settings
         self.screen = screen
+        self.game_stats = stats.Stats(self.ai_settings)
 
         """Load Images"""
         self.ai_settings.load_images()
@@ -80,24 +81,28 @@ class GameFunctions:
 
     def update_screen(self):
         self.screen.blit(self.background, (0, 0))
-
+        self.score = self.pacman.pellets
+        self.check_score()
         textpos = 0
         if pygame.font:
             font = pygame.font.Font(None, 36)
-            text = font.render("Score %s" % self.pacman.pellets
+            text = font.render("Score %s" % self.score
                                 , 1, (255, 255, 255))
             textpos = text.get_rect(centerx=self.background.get_width()/2)
             self.screen.blit(text, textpos)
 
         reclist = [textpos]
-        # pacman_sprites.clear(screen,self.background)
-        # pacman.draw(screen)
         reclist += self.power_game_pellets.draw(self.screen)
         reclist += self.small_game_pellets.draw(self.screen)
         reclist += self.pacman_sprites.draw(self.screen)
         reclist += self.ghost_sprites.draw(self.screen)
         pygame.display.update(reclist)
 
+    """Check if current score is better than high score"""
+    def check_score(self):
+        if self.score > self.game_stats.highScore:
+            self.game_stats.highScore = self.score
+            self.game_stats.updateScore()
 
     def load_sprites(self):
         """Load Level"""

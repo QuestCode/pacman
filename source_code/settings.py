@@ -14,8 +14,9 @@ class Settings():
         self.bg_color = (0,0,0)
         self.button_color = (0,0,0)
         self.text_color = (255,255,255)
+        self.read_score_file()
 
-        # Ship settings
+        # Pacman settings
         self.pacman_limit = 3
 
 
@@ -74,4 +75,20 @@ class Settings():
             pygame.mixer.music.load(fullname)
             pygame.mixer.music.play()
         except :
+            pass
+
+    def read_score_file(self):
+        filename = os.path.join('assets', 'scores.txt')
+        try:
+            self.r_scoreFile = open(filename,'r')
+        except :
+            print('no file')
+            pass
+
+    def write_score_file(self):
+        filename = os.path.join('assets', 'scores.txt')
+        try:
+            self.w_scoreFile = open(filename,'w')
+        except :
+            print('no file')
             pass
